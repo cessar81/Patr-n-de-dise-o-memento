@@ -1,0 +1,65 @@
+#	include <iostream>
+#include <vector>
+
+// Clase Memento: Guarda el estado
+class Memento {
+private:
+    std::string state;
+public:
+    Memento(std::string s) : state(s) {}
+    std::string getState() const { return state; }
+};
+
+// Clase Originador: Crea y restaura mementos
+class Originator {
+private:
+    std::string state;
+public:
+    void setState(std::string s) {
+        state = s;
+        std::cout << "Estado actual: " << state << std::endl;
+    }
+
+    Memento saveToMemento() {
+        return Memento(state);
+    }
+
+    void restoreFromMemento(Memento m) {
+        state = m.getState();
+        std::cout << "Estado restaurado: " << state << std::endl;
+    }
+};
+
+// Clase Caretaker: Administra los mementos
+class Caretaker {
+private:
+    std::vector<Memento> history;
+public:
+    void addMemento(Memento m) {
+        history.push_back(m);
+    }
+
+    Memento getMemento(int index) {
+        return history[index];
+    }
+};
+
+// Función principal
+int main() {
+    Originator originator;
+    Caretaker caretaker;
+
+    originator.setState("Estado 1");
+    caretaker.addMemento(originator.saveToMemento());
+
+    originator.setState("Estado 2");
+    caretaker.addMemento(originator.saveToMemento());
+
+    originator.setState("Estado 3");
+    
+    // Restaurando un estado anterior
+    originator.restoreFromMemento(caretaker.getMemento(0));
+
+    return 0;
+    
+}
