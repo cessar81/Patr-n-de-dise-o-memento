@@ -1,0 +1,30 @@
++-----------------+
+|   Memento      |
++-----------------+
+| - state: string |
++-----------------+
+| + getState(): string |
++-----------------+
+
+       ▲
+       |
++--------------------+
+|   Originator      |
++--------------------+
+| - state: string   |
++--------------------+
+| + setState(s: string): void |
+| + saveToMemento(): Memento  |
+| + restoreFromMemento(m: Memento): void |
++--------------------+
+
+       |
+       ▼
++--------------------+
+|   Caretaker       |
++--------------------+
+| - history: vector<Memento> |
++--------------------+
+| + addMemento(m: Memento): void |
+| + getMemento(index: int): Memento |
++--------------------+
